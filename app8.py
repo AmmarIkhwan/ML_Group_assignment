@@ -313,7 +313,7 @@ with st.form("salary_prediction_form"):
             'embedded systems technology', 'aeronautical engineering', 'computer and communication engineering',
             'mechanical & production engineering', 'electronics', 'other'
         ],index=None)
-    college_city_tier = col2.selectbox("College City Tier", [1, 2, 3], index=None)
+    college_city_tier = col2.selectbox("College City Tier", [ 0, 1 ], index=None)
     college_state = col1.selectbox("College State", [
             'Karnataka', 'Maharashtra', 'Tamil Nadu', 'Delhi', 'Uttar Pradesh', 
             'West Bengal', 'Gujarat', 'Rajasthan', 'Madhya Pradesh', 'Bihar',
