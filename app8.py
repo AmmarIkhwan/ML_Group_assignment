@@ -365,8 +365,6 @@ all_filled = all([
     college_gpa, college_tier, degree, specialization,
     college_city_tier, college_state, graduation_year,
     english_score, logical_score, quant_score, domain_score,
-    computer_programming, electronics_semicon, computer_science,
-    mechanical_engg, electrical_engg, telecom_engg, civil_engg,
     conscientiousness, agreeableness, extraversion, neuroticism, openness
 ])
 
