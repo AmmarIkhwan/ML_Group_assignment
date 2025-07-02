@@ -353,8 +353,7 @@ with st.form("salary_prediction_form"):
     neuroticism = col2.number_input("Neuroticism", -10.0, 10.0, 0.1000, 0.1, format="%0.4f")
     openness = col1.number_input("Openness to Experience", -10.0, 10.0, 0.1000, 0.1, format="%0.4f")
 
-st.markdown("---")
-with st.container():
+    st.markdown("---")
     predict_clicked = st.form_submit_button("Predict Salary")
 
 all_filled = all([
