@@ -255,7 +255,7 @@ def load_model():
     except FileNotFoundError:
         st.error("Model file not found! Please upload the model files.")
         return None, None
-st.image("india.png", width=300, use_column_width=False) 
+st.image("india.png",use_column_width=True) 
 #st.markdown("<div style='text-align: center;'><img src='india.png' width='300'></div>", unsafe_allow_html=True)
 # Main App
 st.markdown('<h1 class="main-header">🎓 Engineering Graduate Salary Predictor | 🇮🇳 </h1>', unsafe_allow_html=True)
