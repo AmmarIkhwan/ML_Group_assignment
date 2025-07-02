@@ -274,7 +274,9 @@ with st.form("salary_prediction_form"):
     #st.subheader('',divider='blue')
     st.markdown("<h3 style='text-align: center;'>👤 Personal Information</h3>", unsafe_allow_html=True)
     col1, col2 = st.columns(2)
-    gender = col1.selectbox("Gender", ['m', 'f'])
+    gender = col1.selectbox("Gender", ['Male', 'Female'])
+    Male='m'
+    Female='f'
     dob = col2.date_input("Date of Birth", value=datetime.date(2000, 1, 1))
 
     # ACADEMIC PERFORMANCE
