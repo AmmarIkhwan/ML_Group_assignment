@@ -257,10 +257,17 @@ def load_model():
         return None, None
 #st.image("india.png") 
 #st.markdown("<div style='text-align: center;'><img src='india.png' width='300'></div>", unsafe_allow_html=True)
+import base64
+
+def get_image_base64(image_path):
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
+
+img_base64 = get_image_base64("india.png")
 st.markdown(
-    """
+    f"""
     <div style='width:300px; height:100px; margin:auto; display:flex; align-items:center; justify-content:center;'>
-        <img src='{india.png}' style='max-width:100%; max-height:100%; object-fit:contain;' />
+        <img src='data:image/png;base64,{img_base64}' style='max-width:100%; max-height:100%; object-fit:contain;' />
     </div>
     """,
     unsafe_allow_html=True
