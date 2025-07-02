@@ -45,6 +45,17 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+
+st.markdown("""
+<style>
+div.stButton > button[kind="primary"] {
+    font-size: 1.5rem;
+    padding: 1rem 2.5rem;
+    width: 100%;
+    border-radius: 8px;
+}
+</style>
+""", unsafe_allow_html=True)
 # ========================================================================================
 # CUSTOM TRANSFORMERS (MUST MATCH TRAINING SCRIPT)
 # ========================================================================================
@@ -372,7 +383,9 @@ with st.form("salary_prediction_form"):
     openness = col1.number_input("Openness to Experience", -10.0, 10.0, 0.1000, 0.1, format="%0.4f")
 
     st.markdown("---")
-    predict_clicked = st.form_submit_button("Predict Salary")
+    col1, col2, col3 = st.columns([1,2,1])
+    with col2:
+        predict_clicked = st.form_submit_button("Predict Salary")
 
 all_filled = all(
     field is not None and field != ''
