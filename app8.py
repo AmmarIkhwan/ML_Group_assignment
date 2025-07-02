@@ -374,9 +374,7 @@ with st.form("salary_prediction_form"):
     openness = col1.number_input("Openness to Experience", -10.0, 10.0, 0.1000, 0.1, format="%0.4f")
 
     st.markdown("---")
-    col1, col2, col3 = st.columns([1,2,1])
-    with col2:
-        predict_clicked = st.form_submit_button("Predict Salary")
+    predict_clicked = st.form_submit_button("Predict Salary", use_container_width=True)
 
 all_filled = all(
     field is not None and field != ''
