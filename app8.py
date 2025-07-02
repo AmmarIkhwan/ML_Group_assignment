@@ -329,7 +329,7 @@ with st.form("salary_prediction_form"):
     english_score = col1.number_input("English Score", 0, 1000, 0, 1)
     logical_score = col2.number_input("Logical Reasoning Score", 0, 1000, 0, 1)
     quant_score = col1.number_input("Quantitative Score", 0, 1000, 0, 1)
-    domain_score = col2.number_input("Domain Knowledge Score (0-1)", 0.0, 1.0, 0.0001, 0.1, format="%0.4f")
+    domain_score = col2.number_input("Domain Knowledge Score (0-1)", 0.0, 1.0, 0.0001, 0.1, format="%0.7f")
 
     # TECHNICAL SKILLS
     st.subheader('',divider='gray')
