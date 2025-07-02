@@ -46,16 +46,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("""
-<style>
-div.stButton > button[kind="primary"] {
-    font-size: 1.5rem;
-    padding: 1rem 2.5rem;
-    width: 100%;
-    border-radius: 8px;
-}
-</style>
-""", unsafe_allow_html=True)
+
 # ========================================================================================
 # CUSTOM TRANSFORMERS (MUST MATCH TRAINING SCRIPT)
 # ========================================================================================
