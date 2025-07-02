@@ -358,6 +358,38 @@ with st.form("salary_prediction_form"):
     st.markdown("---")
     predict_clicked = st.form_submit_button("Predict Salary")
 
+    input_data = {
+        'Gender': gender,
+        'DOB': str(dob),
+        '10percentage': tenth_percentage,
+        '10board': tenth_board.lower(),
+        '12percentage': twelfth_percentage,
+        '12board': twelfth_board.lower(),
+        'CollegeTier': college_tier,
+        'Degree': degree,
+        'Specialization': specialization,
+        'collegeGPA': college_gpa / 10.0,
+        'CollegeCityTier': college_city_tier,
+        'CollegeState': college_state,
+        'GraduationYear': graduation_year,
+        'English': english_score,
+        'Logical': logical_score,
+        'Quant': quant_score,
+        'Domain': domain_score,
+        'ComputerProgramming': computer_programming,
+        'ElectronicsAndSemicon': electronics_semicon,
+        'ComputerScience': computer_science,
+        'MechanicalEngg': mechanical_engg,
+        'ElectricalEngg': electrical_engg,
+        'TelecomEngg': telecom_engg,
+        'CivilEngg': civil_engg,
+        'conscientiousness': conscientiousness,
+        'agreeableness': agreeableness,
+        'extraversion': extraversion,
+        'nueroticism': neuroticism,
+        'openess_to_experience': openness
+    }
+
 all_filled = all([
     gender, dob,
     tenth_percentage, tenth_board,
@@ -371,38 +403,6 @@ all_filled = all([
 if predict_clicked:
     if not all_filled:
         st.warning("Please fill out all fields before predicting.")
-    else:
-        input_data = {
-            'Gender': gender,
-            'DOB': str(dob),
-            '10percentage': tenth_percentage,
-            '10board': tenth_board.lower(),
-            '12percentage': twelfth_percentage,
-            '12board': twelfth_board.lower(),
-            'CollegeTier': college_tier,
-            'Degree': degree,
-            'Specialization': specialization,
-            'collegeGPA': college_gpa / 10.0,
-            'CollegeCityTier': college_city_tier,
-            'CollegeState': college_state,
-            'GraduationYear': graduation_year,
-            'English': english_score,
-            'Logical': logical_score,
-            'Quant': quant_score,
-            'Domain': domain_score,
-            'ComputerProgramming': computer_programming,
-            'ElectronicsAndSemicon': electronics_semicon,
-            'ComputerScience': computer_science,
-            'MechanicalEngg': mechanical_engg,
-            'ElectricalEngg': electrical_engg,
-            'TelecomEngg': telecom_engg,
-            'CivilEngg': civil_engg,
-            'conscientiousness': conscientiousness,
-            'agreeableness': agreeableness,
-            'extraversion': extraversion,
-            'nueroticism': neuroticism,
-            'openess_to_experience': openness
-        }
 
         df = pd.DataFrame([input_data])
 
