@@ -266,7 +266,7 @@ def get_image_base64(image_path):
 img_base64 = get_image_base64("india.png")
 st.markdown(
     f"""
-    <div style='width:300px; height:100px; margin:auto; display:flex; align-items:center; justify-content:center;'>
+    <div style='width:1000px; height:200px; margin:auto; display:flex; align-items:center; justify-content:center;'>
         <img src='data:image/png;base64,{img_base64}' style='max-width:100%; max-height:100%; object-fit:contain;' />
     </div>
     """,
