@@ -353,10 +353,28 @@ with st.form("salary_prediction_form"):
     neuroticism = col2.number_input("Neuroticism", -10.0, 10.0, 0.1000, 0.1, format="%0.4f")
     openness = col1.number_input("Openness to Experience", -10.0, 10.0, 0.1000, 0.1, format="%0.4f")
 
-    st.markdown("---")
+st.markdown("---")
+with st.container():
+    st.markdown("<div class='center-button'>", unsafe_allow_html=True)
     predict_clicked = st.form_submit_button("Predict Salary")
+    st.markdown("</div>", unsafe_allow_html=True)
 
-    if predict_clicked:
+all_filled = all([
+    gender, dob,
+    tenth_percentage, tenth_board,
+    twelfth_percentage, twelfth_board,
+    college_gpa, college_tier, degree, specialization,
+    college_city_tier, college_state, graduation_year,
+    english_score, logical_score, quant_score, domain_score,
+    computer_programming, electronics_semicon, computer_science,
+    mechanical_engg, electrical_engg, telecom_engg, civil_engg,
+    conscientiousness, agreeableness, extraversion, neuroticism, openness
+])
+
+if predict_clicked:
+    if not all_filled:
+        st.warning("Please fill out all fields before predicting.")
+    else:
         input_data = {
             'Gender': gender,
             'DOB': str(dob),
