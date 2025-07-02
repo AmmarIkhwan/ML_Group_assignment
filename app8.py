@@ -355,9 +355,7 @@ with st.form("salary_prediction_form"):
 
 st.markdown("---")
 with st.container():
-    st.markdown("<div class='center-button'>", unsafe_allow_html=True)
     predict_clicked = st.form_submit_button("Predict Salary")
-    st.markdown("</div>", unsafe_allow_html=True)
 
 all_filled = all([
     gender, dob,
