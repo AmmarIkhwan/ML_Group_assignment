@@ -257,7 +257,7 @@ def load_model():
         return None, None
 
 # Main App
-st.markdown('<h1 class="main-header">🎓 Engineering Graduate Salary Predictor</h1>', unsafe_allow_html=True)
+st.markdown('<h1 class="main-header">🎓 Engineering Graduate Salary Predictor | 🇮🇳 </h1>', unsafe_allow_html=True)
 
 pipeline, metadata = load_model()
 if pipeline is None:
