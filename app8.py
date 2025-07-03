@@ -509,7 +509,7 @@ def individual_prediction_page():
                 lower_bound = max(0, prediction - rmse)  # Ensure non-negative
                 upper_bound = prediction + rmse
 
-            st.markdown(f"""
+            prediction_html = f"""
             <div class="prediction-box">
                 <h2>💰 Salary Prediction Results</h2>
                 <div class="prediction-amount">₹{prediction:,.0f}</div>
@@ -524,7 +524,8 @@ def individual_prediction_page():
                     Based on your profile and current market trends
                 </p>
             </div>
-            """, unsafe_allow_html=True)
+            """
+            st.markdown(prediction_html, unsafe_allow_html=True)
             
             # Show disclaimer after prediction
             st.markdown("""
