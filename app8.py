@@ -358,7 +358,7 @@ def display_required_columns():
         <ul>
             <li><strong>collegeGPA</strong>: Should be on a scale of 0-10 (will be automatically normalized)</li>
             <li><strong>Board names</strong>: Use lowercase (e.g., 'cbse', 'icse', 'state board')</li>
-            <li><strong>Technical Skills</strong>: Use 0 if not tested, otherwise provide scores</li>
+            <li><strong>Technical Skills</strong>: Use 0 if not tested, otherwise provide scores [if -1, model will also set it as NaN]</li>
             <li><strong>Personality Traits</strong>: Typically range from -10 to 10</li>
             <li><strong>DOB</strong>: Use format YYYY-MM-DD</li>
         </ul>
