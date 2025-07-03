@@ -356,9 +356,10 @@ def display_required_columns():
     <div class="feature-list">
         <h4>💡 Important Notes:</h4>
         <ul>
+            <li><strong>Column Order</strong>: Columns don't need to be in the exact same position/order as shown above - just ensure all column names match exactly</li>
             <li><strong>collegeGPA</strong>: Should be on a scale of 0-10 (will be automatically normalized)</li>
             <li><strong>Board names</strong>: Use lowercase (e.g., 'cbse', 'icse', 'state board')</li>
-            <li><strong>Technical Skills</strong>: Use 0 if not tested, otherwise provide scores [if -1, model will also set it as NaN]</li>
+            <li><strong>Technical Skills</strong>: Use 0 if not tested, or -1 (will be automatically converted to 0)</li>
             <li><strong>Personality Traits</strong>: Typically range from -10 to 10</li>
             <li><strong>DOB</strong>: Use format YYYY-MM-DD</li>
         </ul>
