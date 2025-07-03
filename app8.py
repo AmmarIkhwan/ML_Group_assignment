@@ -382,19 +382,7 @@ def individual_prediction_page():
     if metadata:
         rmse = metadata["performance"]["rmse"]
         r2 = metadata["performance"]["r2_score"]
-        st.markdown(f'<p class="sub-header">Model: {metadata["model_name"]} | R² Score: {r2:.4f} | RMSE: ₹{rmse:,.0f}</p>', unsafe_allow_html=True)
-        
-        # Add disclaimer
-        st.markdown("""
-        <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 1rem; margin: 1rem 0;">
-            <h4 style="color: #856404; margin-top: 0;">⚠️ Important Disclaimer</h4>
-            <p style="color: #856404; margin-bottom: 0;">
-                This model provides <strong>salary estimates with uncertainty</strong>. The predictions are shown as ranges 
-                (±₹{:,.0f}) based on the model's RMSE. Actual salaries may vary due to market conditions, 
-                company policies, negotiation, and other factors not captured in the model.
-            </p>
-        </div>
-        """.format(rmse), unsafe_allow_html=True)
+        st.markdown(f'<p class="sub-header">Model: {metadata["model_name"]} | R² Score: {r2:.4f}</p>', unsafe_allow_html=True)
 
     with st.form("salary_prediction_form"):
         # PERSONAL INFO
@@ -516,41 +504,38 @@ def individual_prediction_page():
             with st.spinner('🔮 Calculating salary prediction...'):
                 prediction = pipeline.predict(df)[0]
                 
-                # Calculate range using RMSE if available
-                if metadata and "performance" in metadata:
-                    rmse = metadata["performance"]["rmse"]
-                    lower_bound = max(0, prediction - rmse)  # Ensure non-negative
-                    upper_bound = prediction + rmse
-                    
-                    st.markdown(f"""
-                    <div class="prediction-box">
-                        <h2>💰 Salary Prediction Results</h2>
-                        <div class="prediction-amount">₹{lower_bound:,.0f} - ₹{upper_bound:,.0f}</div>
-                        <p style="font-size: 1.2rem; margin: 0.5rem 0;">Predicted Annual Salary Range</p>
-                        <p style="font-size: 1.1rem; opacity: 0.9;">
-                            Monthly Range: ₹{lower_bound/12:,.0f} - ₹{upper_bound/12:,.0f}
-                        </p>
-                        <p style="font-size: 1rem; opacity: 0.8; margin-top: 1rem;">
-                            Best Estimate: ₹{prediction:,.0f} (±₹{rmse:,.0f})
-                        </p>
-                        <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 1rem;">
-                            Range based on model uncertainty • Actual salary may vary
-                        </p>
-                    </div>
-                    """, unsafe_allow_html=True)
-                else:
-                    # Fallback if no metadata available
-                    st.markdown(f"""
-                    <div class="prediction-box">
-                        <h2>💰 Salary Prediction Results</h2>
-                        <div class="prediction-amount">₹{prediction:,.2f}</div>
-                        <p style="font-size: 1.2rem; margin: 0.5rem 0;">Predicted Annual Salary</p>
-                        <p style="font-size: 1.1rem; opacity: 0.9;">Monthly: ₹{prediction/12:,.2f}</p>
-                        <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 1rem;">
-                            Based on your profile and current market trends
-                        </p>
-                    </div>
-                    """, unsafe_allow_html=True)
+                # Get RMSE for range calculation
+                rmse = metadata["performance"]["rmse"] if metadata else 50000  # fallback RMSE
+                lower_bound = max(0, prediction - rmse)  # Ensure non-negative
+                upper_bound = prediction + rmse
+
+            st.markdown(f"""
+            <div class="prediction-box">
+                <h2>💰 Salary Prediction Results</h2>
+                <div class="prediction-amount">₹{prediction:,.0f}</div>
+                <p style="font-size: 1.2rem; margin: 0.5rem 0;">Predicted Annual Salary</p>
+                <p style="font-size: 1.1rem; opacity: 0.9;">Monthly: ₹{prediction/12:,.0f}</p>
+                
+                <p style="font-size: 0.9rem; opacity: 0.7; margin-top: 1.5rem;">
+                    Estimated Range: ₹{lower_bound:,.0f} - ₹{upper_bound:,.0f}
+                </p>
+                
+                <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 1rem; font-style: italic;">
+                    Based on your profile and current market trends
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # Show disclaimer after prediction
+            st.markdown("""
+            <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 1rem; margin: 1rem 0;">
+                <h4 style="color: #856404; margin-top: 0;">📝 Important Note</h4>
+                <p style="color: #856404; margin-bottom: 0; font-size: 0.9rem;">
+                    This prediction is an estimate based on historical data and should be used as guidance only. 
+                    Actual salaries may vary based on company, location, market conditions, and individual performance.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
 
         except Exception as e:
             st.error(f"❌ Error making prediction: {str(e)}")
@@ -567,19 +552,7 @@ def batch_prediction_page():
     if metadata:
         rmse = metadata["performance"]["rmse"]
         r2 = metadata["performance"]["r2_score"]
-        st.markdown(f'<p class="sub-header">Model: {metadata["model_name"]} | R² Score: {r2:.4f} | RMSE: ₹{rmse:,.0f}</p>', unsafe_allow_html=True)
-        
-        # Add disclaimer
-        st.markdown("""
-        <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 1rem; margin: 1rem 0;">
-            <h4 style="color: #856404; margin-top: 0;">⚠️ Important Disclaimer</h4>
-            <p style="color: #856404; margin-bottom: 0;">
-                This model provides <strong>salary estimates with uncertainty</strong>. The predictions are shown as ranges 
-                (±₹{:,.0f}) based on the model's RMSE. Actual salaries may vary due to market conditions, 
-                company policies, negotiation, and other factors not captured in the model.
-            </p>
-        </div>
-        """.format(rmse), unsafe_allow_html=True)
+        st.markdown(f'<p class="sub-header">Model: {metadata["model_name"]} | R² Score: {r2:.4f}</p>', unsafe_allow_html=True)
     
     # Display required format
     display_required_columns()
@@ -656,38 +629,24 @@ def batch_prediction_page():
                             # Make predictions
                             predictions = pipeline.predict(df_processed[required_columns])
                             
+                            # Get RMSE for range calculation
+                            rmse = metadata["performance"]["rmse"] if metadata else 50000  # fallback RMSE
+                            
                             # Add predictions to the original dataframe
                             results_df = df.copy()
                             results_df['Predicted_Salary'] = predictions
                             results_df['Predicted_Monthly_Salary'] = predictions / 12
-                            
-                            # Add range calculations if metadata available
-                            if metadata and "performance" in metadata:
-                                rmse = metadata["performance"]["rmse"]
-                                results_df['Salary_Lower_Bound'] = np.maximum(0, predictions - rmse)
-                                results_df['Salary_Upper_Bound'] = predictions + rmse
-                                results_df['Monthly_Lower_Bound'] = results_df['Salary_Lower_Bound'] / 12
-                                results_df['Monthly_Upper_Bound'] = results_df['Salary_Upper_Bound'] / 12
+                            results_df['Salary_Range_Lower'] = np.maximum(0, predictions - rmse)  # Ensure non-negative
+                            results_df['Salary_Range_Upper'] = predictions + rmse
+                            results_df['Prediction_Error_Range'] = f"±₹{rmse:,.0f}"
                             
                             # Display summary
-                            if metadata and "performance" in metadata:
-                                rmse = metadata["performance"]["rmse"]
-                                st.markdown(f"""
-                                <div class="prediction-box">
-                                    <h3>🎉 Batch Prediction Completed!</h3>
-                                    <p>Successfully predicted salary ranges for all candidates</p>
-                                    <p style="font-size: 0.9rem; opacity: 0.8;">
-                                        Each prediction includes uncertainty range (±₹{rmse:,.0f}) based on model RMSE
-                                    </p>
-                                </div>
-                                """, unsafe_allow_html=True)
-                            else:
-                                st.markdown("""
-                                <div class="prediction-box">
-                                    <h3>🎉 Batch Prediction Completed!</h3>
-                                    <p>Successfully predicted salaries for all candidates</p>
-                                </div>
-                                """, unsafe_allow_html=True)
+                            st.markdown("""
+                            <div class="prediction-box">
+                                <h3>🎉 Batch Prediction Completed!</h3>
+                                <p>Successfully predicted salaries for all candidates</p>
+                            </div>
+                            """, unsafe_allow_html=True)
                             
                             # Summary statistics
                             col1, col2, col3, col4 = st.columns(4)
@@ -698,26 +657,32 @@ def batch_prediction_page():
                             
                             # Show results preview
                             st.markdown("#### 📋 Results Preview")
-                            if metadata and "performance" in metadata:
-                                display_columns = ['Gender', 'Degree', 'Specialization', 'GraduationYear', 
-                                                 'Predicted_Salary', 'Salary_Lower_Bound', 'Salary_Upper_Bound',
-                                                 'Predicted_Monthly_Salary']
-                                available_display_columns = [col for col in display_columns if col in results_df.columns]
-                                preview_df = results_df[available_display_columns].head(10).round(0)
-                                # Format currency columns
-                                currency_cols = ['Predicted_Salary', 'Salary_Lower_Bound', 'Salary_Upper_Bound', 'Predicted_Monthly_Salary']
-                                for col in currency_cols:
-                                    if col in preview_df.columns:
-                                        preview_df[col] = preview_df[col].apply(lambda x: f"₹{x:,.0f}")
-                                st.dataframe(preview_df, use_container_width=True)
-                            else:
-                                display_columns = ['Gender', 'Degree', 'Specialization', 'GraduationYear', 
-                                                 'Predicted_Salary', 'Predicted_Monthly_Salary']
-                                available_display_columns = [col for col in display_columns if col in results_df.columns]
-                                st.dataframe(
-                                    results_df[available_display_columns].head(10).round(2), 
-                                    use_container_width=True
-                                )
+                            display_columns = ['Gender', 'Degree', 'Specialization', 'GraduationYear', 
+                                             'Predicted_Salary', 'Salary_Range_Lower', 'Salary_Range_Upper', 'Predicted_Monthly_Salary']
+                            available_display_columns = [col for col in display_columns if col in results_df.columns]
+                            
+                            # Format the preview dataframe for better display
+                            preview_df = results_df[available_display_columns].head(10).copy()
+                            
+                            # Round salary columns for cleaner display
+                            salary_columns = ['Predicted_Salary', 'Salary_Range_Lower', 'Salary_Range_Upper', 'Predicted_Monthly_Salary']
+                            for col in salary_columns:
+                                if col in preview_df.columns:
+                                    preview_df[col] = preview_df[col].round(0).astype(int)
+                            
+                            st.dataframe(preview_df, use_container_width=True)
+                            
+                            # Show disclaimer after batch results
+                            st.markdown("""
+                            <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 1rem; margin: 1rem 0;">
+                                <h4 style="color: #856404; margin-top: 0;">📝 Important Note</h4>
+                                <p style="color: #856404; margin-bottom: 0; font-size: 0.9rem;">
+                                    These predictions are estimates based on historical data and should be used as guidance only. 
+                                    Actual salaries may vary based on company, location, market conditions, and individual performance.
+                                    Each prediction includes a salary range indicating potential variation.
+                                </p>
+                            </div>
+                            """, unsafe_allow_html=True)
                             
                             # Download link
                             csv_buffer = io.StringIO()
