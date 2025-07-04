@@ -462,8 +462,20 @@ def individual_prediction_page():
         neuroticism = col2.number_input("Neuroticism", -10.0, 10.0, 0.0, 0.1, format="%0.2f")
         openness = col1.number_input("Openness to Experience", -10.0, 10.0, 0.0, 0.1, format="%0.2f")
 
-        st.markdown("---")
-        predict_clicked = st.form_submit_button("🔮 Predict Salary", use_container_width=True, type="primary")
+    st.markdown("---")
+    predict_clicked = st.form_submit_button("Predict Salary")
+
+all_filled = all(
+    field is not None and field != ''
+    for field in [
+    gender, dob,
+    tenth_percentage, tenth_board,
+    twelfth_percentage, twelfth_board,
+    college_gpa, college_tier, degree, specialization,
+    college_city_tier, college_state, graduation_year,
+    english_score, logical_score, quant_score, domain_score,
+    conscientiousness, agreeableness, extraversion, neuroticism, openness
+])
 
 if predict_clicked:
     if not all_filled:
