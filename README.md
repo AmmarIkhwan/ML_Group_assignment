@@ -83,8 +83,9 @@ The model analyzes **29 key features** across multiple categories:
 
 ```
 ├── Model_Training/
-│   └── A2.ipynb                    # Complete EDA and model training notebook
-├── app8.py                         # Streamlit web application
+│   └── A2.ipynb                          # Complete EDA and model training notebook
+│   └── Engineering_graduate_salary.csv   # Dataset used for training
+├── app8.py                               # Streamlit web application
 ├── final_salary_prediction_pipeline.pkl  # Trained model pipeline
 ├── model_metadata.pkl              # Model performance metrics
 ├── india.png                       # App logo/header image
