@@ -93,7 +93,7 @@ The model analyzes **29 key features** across multiple categories:
 └── README.md                       # Project documentation
 ```
 
-## 🚀 Getting Started
+## 🚀 Getting Started [If you want to run locally]
 
 ### Prerequisites
 ```bash
