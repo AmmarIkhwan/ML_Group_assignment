@@ -388,7 +388,7 @@ def individual_prediction_page():
         # PERSONAL INFO
         st.markdown("<h3 style='text-align: center; color: #0078d4;'>👤 Personal Information</h3>", unsafe_allow_html=True)
         col1, col2 = st.columns(2)
-        gender = col1.selectbox("Gender", ['Male', 'Female'],index=0)
+        gender = col1.selectbox("Gender", ['Male', 'Female'],index=None)
         dob = col2.date_input("Date of Birth", value=datetime.date(2000, 1, 1))
 
         # ACADEMIC PERFORMANCE
