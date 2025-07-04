@@ -105,7 +105,7 @@ class DataCleaner(BaseEstimator, TransformerMixin):
         X_transformed.loc[X_transformed['GraduationYear'] == 0, 'GraduationYear'] = self.graduation_year_mode_
         
         technical_cols = ['ComputerProgramming', 'ElectronicsAndSemicon', 'ComputerScience',
-                         'MechanicalEngg', 'ElectricalEngg', 'TelecomEngg', 'CivilEngg']
+                         'MechanicalEngg', 'ElectricalEngg', 'TelecomEngg', 'CivilEngg','Domain']
         
         for col in technical_cols:
             if col in X_transformed.columns:
