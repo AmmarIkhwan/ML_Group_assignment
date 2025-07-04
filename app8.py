@@ -105,7 +105,7 @@ class DataCleaner(BaseEstimator, TransformerMixin):
         X_transformed.loc[X_transformed['GraduationYear'] == 0, 'GraduationYear'] = self.graduation_year_mode_
         
         technical_cols = ['ComputerProgramming', 'ElectronicsAndSemicon', 'ComputerScience',
-                         'MechanicalEngg', 'ElectricalEngg', 'TelecomEngg', 'CivilEngg','Domain']
+                         'MechanicalEngg', 'ElectricalEngg', 'TelecomEngg', 'CivilEngg']
         
         for col in technical_cols:
             if col in X_transformed.columns:
@@ -159,7 +159,7 @@ class BoardClassifier(BaseEstimator, TransformerMixin):
         return self
     
     def classify_board(self, board_name):
-        if pd.isna(board_name) or str(board_name).lower() == 'unknown':
+        if pd.isna(board_name) or str(board_name).lower() == 'unknown' or str(board_name).strip() == '0':
             return 'Unknown'
         s = str(board_name).lower()
         
@@ -358,7 +358,7 @@ def display_required_columns():
         <ul>
             <li><strong>Column Order</strong>: Columns don't need to be in the exact same position/order as shown above - just ensure all column names match exactly</li>
             <li><strong>collegeGPA</strong>: Should be on a scale of 0-10 (will be automatically normalized)</li>
-            <li><strong>Board names</strong>: Use lowercase (e.g., 'cbse', 'icse', 'state board')</li>
+            <li><strong>Board names</strong>: Use lowercase (e.g., 'cbse', 'icse', 'state board'). Use '0' or 'unknown' for unknown boards</li>
             <li><strong>Technical Skills</strong>: Use 0 if not tested, or -1 (will be automatically converted to 0)</li>
             <li><strong>Personality Traits</strong>: Typically range from -10 to 10</li>
             <li><strong>DOB</strong>: Use format YYYY-MM-DD</li>
@@ -388,25 +388,25 @@ def individual_prediction_page():
         # PERSONAL INFO
         st.markdown("<h3 style='text-align: center; color: #0078d4;'>👤 Personal Information</h3>", unsafe_allow_html=True)
         col1, col2 = st.columns(2)
-        gender = col1.selectbox("Gender", ['Male', 'Female'],index=None)
+        gender = col1.selectbox("Gender", ['Male', 'Female'])
         dob = col2.date_input("Date of Birth", value=datetime.date(2000, 1, 1))
 
         # ACADEMIC PERFORMANCE
         st.markdown("---")
         st.markdown("<h3 style='text-align: center; color: #0078d4;'>📚 Academic Performance</h3>", unsafe_allow_html=True)
         col1, col2 = st.columns(2)
-        tenth_percentage = col1.number_input("10th Grade Percentage (%)", 0.0, 100.0, 00.0, 0.1)
-        tenth_board = col2.selectbox("10th Grade Board", ['CBSE', 'ICSE', 'State Board', 'RBSE', 'UP Board', 'MP Board', 'WB Board', 'Karnataka Board', 'TN Board', 'Gujarat Board', 'Bihar Board', 'AP Board', 'Kerala Board', 'Maharashtra Board', 'Other'],index=None)
-        twelfth_percentage = col1.number_input("12th Grade Percentage (%)", 0.0, 100.0, 00.0, 0.1)
-        twelfth_board = col2.selectbox("12th Grade Board", ['CBSE', 'ICSE', 'State Board', 'RBSE', 'UP Board', 'MP Board', 'WB Board', 'Karnataka Board', 'TN Board', 'Gujarat Board', 'Bihar Board', 'AP Board', 'Kerala Board', 'Maharashtra Board', 'Other'],index=None)
-        college_gpa = col1.number_input("College GPA (%)", 0.0, 100.0, 00.0, 0.01)
+        tenth_percentage = col1.number_input("10th Grade Percentage (%)", 0.0, 100.0, 85.0, 0.1)
+        tenth_board = col2.selectbox("10th Grade Board", ['CBSE', 'ICSE', 'State Board', 'RBSE', 'UP Board', 'MP Board', 'WB Board', 'Karnataka Board', 'TN Board', 'Gujarat Board', 'Bihar Board', 'AP Board', 'Kerala Board', 'Maharashtra Board', 'Other'])
+        twelfth_percentage = col1.number_input("12th Grade Percentage (%)", 0.0, 100.0, 85.0, 0.1)
+        twelfth_board = col2.selectbox("12th Grade Board", ['CBSE', 'ICSE', 'State Board', 'RBSE', 'UP Board', 'MP Board', 'WB Board', 'Karnataka Board', 'TN Board', 'Gujarat Board', 'Bihar Board', 'AP Board', 'Kerala Board', 'Maharashtra Board', 'Other'])
+        college_gpa = col1.number_input("College GPA (%)", 0.0, 100.0, 75.0, 0.01)
 
         # COLLEGE INFORMATION
         st.markdown("---")
         st.markdown("<h3 style='text-align: center; color: #0078d4;'>🏫 College Information</h3>", unsafe_allow_html=True)
         col1, col2 = st.columns(2)
-        college_tier = col1.selectbox("College Tier", [1, 2, 3],index=None)
-        degree = col2.selectbox("Degree", ['B.Tech/B.E.', 'M.Tech./M.E.', 'MCA', 'M.Sc. (Tech.)'],index=None)
+        college_tier = col1.selectbox("College Tier", [1, 2, 3])
+        degree = col2.selectbox("Degree", ['B.Tech/B.E.', 'M.Tech./M.E.', 'MCA', 'M.Sc. (Tech.)'])
         specialization = col1.selectbox("Specialization",[
                 'computer networking', 'information science', 'information & communication technology',
                 'chemical engineering', 'industrial & production engineering', 'industrial engineering',
@@ -422,13 +422,13 @@ def individual_prediction_page():
                 'applied electronics and instrumentation', 'mechatronics', 'electronics and computer engineering',
                 'embedded systems technology', 'aeronautical engineering', 'computer and communication engineering',
                 'mechanical & production engineering', 'electronics', 'other'
-            ],index=None)
-        college_city_tier = col2.selectbox("College City Tier", [0, 1],index=None)
+            ])
+        college_city_tier = col2.selectbox("College City Tier", [0, 1])
         college_state = col1.selectbox("College State", [
                 'Karnataka', 'Maharashtra', 'Tamil Nadu', 'Delhi', 'Uttar Pradesh', 
                 'West Bengal', 'Gujarat', 'Rajasthan', 'Madhya Pradesh', 'Bihar',
                 'Andhra Pradesh', 'Kerala', 'Haryana', 'Punjab', 'Odisha', 'Other'
-            ],index=None)
+            ])
         graduation_year = col2.number_input("Graduation Year", 2000, 2025, 2020, 1)
 
         # TEST SCORES
@@ -462,93 +462,119 @@ def individual_prediction_page():
         neuroticism = col2.number_input("Neuroticism", -10.0, 10.0, 0.0, 0.1, format="%0.2f")
         openness = col1.number_input("Openness to Experience", -10.0, 10.0, 0.0, 0.1, format="%0.2f")
 
-    st.markdown("---")
-    predict_clicked = st.form_submit_button("Predict Salary")
+        st.markdown("---")
+        predict_clicked = st.form_submit_button("🔮 Predict Salary", use_container_width=True, type="primary")
 
-all_filled = all(
-    field is not None and field != ''
-    for field in [
-    gender, dob,
-    tenth_percentage, tenth_board,
-    twelfth_percentage, twelfth_board,
-    college_gpa, college_tier, degree, specialization,
-    college_city_tier, college_state, graduation_year,
-    english_score, logical_score, quant_score, domain_score,
-    conscientiousness, agreeableness, extraversion, neuroticism, openness
-])
-
-if predict_clicked:
-    if not all_filled:
-        st.warning("Please fill out all fields before predicting.")
-    else:
-        input_data = {
+    if predict_clicked:
+        # Validation: Check if all required fields are filled
+        required_fields = {
             'Gender': gender,
-            'DOB': str(dob),
-            '10percentage': tenth_percentage,
-            '10board': tenth_board.lower(),
-            '12percentage': twelfth_percentage,
-            '12board': twelfth_board.lower(),
-            'CollegeTier': college_tier,
+            '10th Grade Board': tenth_board,
+            '12th Grade Board': twelfth_board,
+            'College Tier': college_tier,
             'Degree': degree,
             'Specialization': specialization,
-            'collegeGPA': college_gpa / 10.0,
-            'CollegeCityTier': college_city_tier,
-            'CollegeState': college_state,
-            'GraduationYear': graduation_year,
-            'English': english_score,
-            'Logical': logical_score,
-            'Quant': quant_score,
-            'Domain': domain_score,
-            'ComputerProgramming': computer_programming,
-            'ElectronicsAndSemicon': electronics_semicon,
-            'ComputerScience': computer_science,
-            'MechanicalEngg': mechanical_engg,
-            'ElectricalEngg': electrical_engg,
-            'TelecomEngg': telecom_engg,
-            'CivilEngg': civil_engg,
-            'conscientiousness': conscientiousness,
-            'agreeableness': agreeableness,
-            'extraversion': extraversion,
-            'nueroticism': neuroticism,
-            'openess_to_experience': openness
+            'College City Tier': college_city_tier,
+            'College State': college_state
         }
+        
+        # Check for empty required fields
+        empty_fields = [field_name for field_name, value in required_fields.items() if value is None]
+        
+        # Check for zero values in critical fields
+        zero_fields = []
+        if tenth_percentage == 0.0:
+            zero_fields.append('10th Grade Percentage')
+        if twelfth_percentage == 0.0:
+            zero_fields.append('12th Grade Percentage')
+        if college_gpa == 0.0:
+            zero_fields.append('College GPA')
+        if english_score == 0:
+            zero_fields.append('English Score')
+        if logical_score == 0:
+            zero_fields.append('Logical Score')
+        if quant_score == 0:
+            zero_fields.append('Quantitative Score')
+        if domain_score == 0.0:
+            zero_fields.append('Domain Score')
+        
+        # Show validation errors
+        if empty_fields or zero_fields:
+            st.error("⚠️ Please complete all required fields before predicting:")
+            if empty_fields:
+                st.error(f"**Missing selections:** {', '.join(empty_fields)}")
+            if zero_fields:
+                st.warning(f"**Zero values detected:** {', '.join(zero_fields)} - Please enter valid scores")
+            st.info("💡 **Tip:** All academic percentages and test scores should be greater than 0")
+        else:
+            # All validations passed, proceed with prediction
+            input_data = {
+                'Gender': gender,
+                'DOB': str(dob),
+                '10percentage': tenth_percentage,
+                '10board': tenth_board.lower(),
+                '12percentage': twelfth_percentage,
+                '12board': twelfth_board.lower(),
+                'CollegeTier': college_tier,
+                'Degree': degree,
+                'Specialization': specialization,
+                'collegeGPA': college_gpa / 10.0,
+                'CollegeCityTier': college_city_tier,
+                'CollegeState': college_state,
+                'GraduationYear': graduation_year,
+                'English': english_score,
+                'Logical': logical_score,
+                'Quant': quant_score,
+                'Domain': domain_score,
+                'ComputerProgramming': computer_programming,
+                'ElectronicsAndSemicon': electronics_semicon,
+                'ComputerScience': computer_science,
+                'MechanicalEngg': mechanical_engg,
+                'ElectricalEngg': electrical_engg,
+                'TelecomEngg': telecom_engg,
+                'CivilEngg': civil_engg,
+                'conscientiousness': conscientiousness,
+                'agreeableness': agreeableness,
+                'extraversion': extraversion,
+                'nueroticism': neuroticism,
+                'openess_to_experience': openness
+            }
 
+            df = pd.DataFrame([input_data])
 
-        df = pd.DataFrame([input_data])
+            try:
+                with st.spinner('🔮 Calculating salary prediction...'):
+                    prediction = pipeline.predict(df)[0]
+                    
+                    # Get RMSE for range calculation
+                    rmse = metadata["performance"]["rmse"] if metadata else 50000  # fallback RMSE
+                    lower_bound = max(0, prediction - rmse)  # Ensure non-negative
+                    upper_bound = prediction + rmse
 
-        try:
-            with st.spinner('🔮 Calculating salary prediction...'):
-                prediction = pipeline.predict(df)[0]
+                st.markdown(f"""
+                <div class="prediction-box">
+                    <h2>💰 Salary Prediction Results</h2>
+                    <div class="prediction-amount">₹{prediction:,.0f}</div>
+                    <p style="font-size: 1.2rem; margin: 0.5rem 0;">Predicted Annual Salary</p>
+                    <p style="font-size: 1.1rem; opacity: 0.9;">Monthly: ₹{prediction/12:,.0f}</p>
+                    <p style="font-size: 0.9rem; opacity: 0.7; margin-top: 1.5rem;">Estimated Range: ₹{lower_bound:,.0f} - ₹{upper_bound:,.0f}</p>
+                    <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 1rem; font-style: italic;">Based on your profile and current market trends</p>
+                </div>
+                """, unsafe_allow_html=True)
                 
-                # Get RMSE for range calculation
-                rmse = metadata["performance"]["rmse"] if metadata else 50000  # fallback RMSE
-                lower_bound = max(0, prediction - rmse)  # Ensure non-negative
-                upper_bound = prediction + rmse
+                # Show disclaimer after prediction
+                st.markdown("""
+                <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 1rem; margin: 1rem 0;">
+                    <h4 style="color: #856404; margin-top: 0;">📝 Important Note</h4>
+                    <p style="color: #856404; margin-bottom: 0; font-size: 0.9rem;">
+                        This prediction is an estimate based on historical data and should be used as guidance only. 
+                        Actual salaries may vary based on company, location, market conditions, and individual performance.
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
 
-            st.markdown(f"""
-            <div class="prediction-box">
-                <h2>💰 Salary Prediction Results</h2>
-                <div class="prediction-amount">₹{prediction:,.0f}</div>
-                <p style="font-size: 1.2rem; margin: 0.5rem 0;">Predicted Annual Salary</p>
-                <p style="font-size: 1.1rem; opacity: 0.9;">Monthly: ₹{prediction/12:,.0f}</p>
-                <p style="font-size: 0.9rem; opacity: 0.7; margin-top: 1.5rem;">Estimated Range: ₹{lower_bound:,.0f} - ₹{upper_bound:,.0f}</p>
-                <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 1rem; font-style: italic;">Based on your profile and current market trends</p>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            # Show disclaimer after prediction
-            st.markdown("""
-            <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 1rem; margin: 1rem 0;">
-                <h4 style="color: #856404; margin-top: 0;">📝 Important Note</h4>
-                <p style="color: #856404; margin-bottom: 0; font-size: 0.9rem;">
-                    This prediction is an estimate based on historical data and should be used as guidance only. 
-                    Actual salaries may vary based on company, location, market conditions, and individual performance.
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
-
-        except Exception as e:
-            st.error(f"❌ Error making prediction: {str(e)}")
+            except Exception as e:
+                st.error(f"❌ Error making prediction: {str(e)}")
 
 def batch_prediction_page():
     """Batch prediction from CSV upload"""
