@@ -465,7 +465,10 @@ def individual_prediction_page():
         st.markdown("---")
         predict_clicked = st.form_submit_button("🔮 Predict Salary", use_container_width=True, type="primary")
 
-    if predict_clicked:
+if predict_clicked:
+    if not all_filled:
+        st.warning("Please fill out all fields before predicting.")
+    else:
         input_data = {
             'Gender': gender,
             'DOB': str(dob),
@@ -497,6 +500,7 @@ def individual_prediction_page():
             'nueroticism': neuroticism,
             'openess_to_experience': openness
         }
+
 
         df = pd.DataFrame([input_data])
 
