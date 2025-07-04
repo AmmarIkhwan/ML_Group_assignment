@@ -395,18 +395,18 @@ def individual_prediction_page():
         st.markdown("---")
         st.markdown("<h3 style='text-align: center; color: #0078d4;'>📚 Academic Performance</h3>", unsafe_allow_html=True)
         col1, col2 = st.columns(2)
-        tenth_percentage = col1.number_input("10th Grade Percentage (%)", 0.0, 100.0, 85.0, 0.1)
-        tenth_board = col2.selectbox("10th Grade Board", ['CBSE', 'ICSE', 'State Board', 'RBSE', 'UP Board', 'MP Board', 'WB Board', 'Karnataka Board', 'TN Board', 'Gujarat Board', 'Bihar Board', 'AP Board', 'Kerala Board', 'Maharashtra Board', 'Other'])
-        twelfth_percentage = col1.number_input("12th Grade Percentage (%)", 0.0, 100.0, 85.0, 0.1)
-        twelfth_board = col2.selectbox("12th Grade Board", ['CBSE', 'ICSE', 'State Board', 'RBSE', 'UP Board', 'MP Board', 'WB Board', 'Karnataka Board', 'TN Board', 'Gujarat Board', 'Bihar Board', 'AP Board', 'Kerala Board', 'Maharashtra Board', 'Other'])
-        college_gpa = col1.number_input("College GPA (%)", 0.0, 100.0, 75.0, 0.01)
+        tenth_percentage = col1.number_input("10th Grade Percentage (%)", 0.0, 100.0, 00.0, 0.1)
+        tenth_board = col2.selectbox("10th Grade Board", ['CBSE', 'ICSE', 'State Board', 'RBSE', 'UP Board', 'MP Board', 'WB Board', 'Karnataka Board', 'TN Board', 'Gujarat Board', 'Bihar Board', 'AP Board', 'Kerala Board', 'Maharashtra Board', 'Other'],index=None)
+        twelfth_percentage = col1.number_input("12th Grade Percentage (%)", 0.0, 100.0, 00.0, 0.1)
+        twelfth_board = col2.selectbox("12th Grade Board", ['CBSE', 'ICSE', 'State Board', 'RBSE', 'UP Board', 'MP Board', 'WB Board', 'Karnataka Board', 'TN Board', 'Gujarat Board', 'Bihar Board', 'AP Board', 'Kerala Board', 'Maharashtra Board', 'Other'],index=None)
+        college_gpa = col1.number_input("College GPA (%)", 0.0, 100.0, 00.0, 0.01)
 
         # COLLEGE INFORMATION
         st.markdown("---")
         st.markdown("<h3 style='text-align: center; color: #0078d4;'>🏫 College Information</h3>", unsafe_allow_html=True)
         col1, col2 = st.columns(2)
-        college_tier = col1.selectbox("College Tier", [1, 2, 3])
-        degree = col2.selectbox("Degree", ['B.Tech/B.E.', 'M.Tech./M.E.', 'MCA', 'M.Sc. (Tech.)'])
+        college_tier = col1.selectbox("College Tier", [1, 2, 3],index=None)
+        degree = col2.selectbox("Degree", ['B.Tech/B.E.', 'M.Tech./M.E.', 'MCA', 'M.Sc. (Tech.)'],index=None)
         specialization = col1.selectbox("Specialization",[
                 'computer networking', 'information science', 'information & communication technology',
                 'chemical engineering', 'industrial & production engineering', 'industrial engineering',
@@ -422,13 +422,13 @@ def individual_prediction_page():
                 'applied electronics and instrumentation', 'mechatronics', 'electronics and computer engineering',
                 'embedded systems technology', 'aeronautical engineering', 'computer and communication engineering',
                 'mechanical & production engineering', 'electronics', 'other'
-            ])
-        college_city_tier = col2.selectbox("College City Tier", [0, 1])
+            ],index=None)
+        college_city_tier = col2.selectbox("College City Tier", [0, 1],index=None)
         college_state = col1.selectbox("College State", [
                 'Karnataka', 'Maharashtra', 'Tamil Nadu', 'Delhi', 'Uttar Pradesh', 
                 'West Bengal', 'Gujarat', 'Rajasthan', 'Madhya Pradesh', 'Bihar',
                 'Andhra Pradesh', 'Kerala', 'Haryana', 'Punjab', 'Odisha', 'Other'
-            ])
+            ],index=None)
         graduation_year = col2.number_input("Graduation Year", 2000, 2025, 2020, 1)
 
         # TEST SCORES
